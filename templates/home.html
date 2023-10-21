@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Processor</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;700&display=swap">
+    <style>
+        /* General styles for the page */
+        body {
+            font-family: 'Zilla Slab', serif;
+            font-size: 20px;
+            background-color: #1a1a1a;
+            color: #f8f8f8;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Title styles */
+        h1, .btn {
+            font-weight: 700;
+            font-size: 36px;
+            text-shadow: 3px 3px 6px #666;
+            margin-bottom: 20px;
+        }
+
+        /* Form styles */
+        form {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 10px 20px;
+            font-size: 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Button hover effect */
+        .btn:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+        }
+
+        /* File input styles */
+        input[type=file] {
+            display: none;
+        }
+
+        /* File chosen message styles */
+        #file-chosen-message {
+            display: none;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        /* Loading spinner styles */
+        #spinner {
+            display: none;
+            font-size: 36px;
+            margin-top: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        /* Keyframes for spinner animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .btn-selected {
+        background-color: #45a049; /* Change this value to your preferred color */
+        color: white; /* Change text color if needed */
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Harding Program</h1>
+    <form method="POST" enctype="multipart/form-data" onsubmit="startLoading()">
+        <label for="file-upload" class="btn">Choose a File</label>
+        <input type="file" name="input_file" id="file-upload" accept=".txt" onchange="fileChosen()">
+        <span id="file-chosen-message">File Chosen</span>
+        <div>
+            <button type="button" class="btn" data-os="windows12" onclick="setOS('windows12')">Windows 12</button>
+            <button type="button" class="btn" data-os="windows16" onclick="setOS('windows16')">Windows 16</button>
+            <button type="button" class="btn" data-os="windows19" onclick="setOS('windows19')">Windows 19</button>
+        </div>
+        <input type="hidden" name="os_choice" id="os-choice-input" value="">
+        <button type="submit" class="btn">Hard It!</button>
+    </form>
+    <div id="spinner">⠋</div>
+    <script>
+        function setOS(os) {
+            // Remove the 'btn-selected' class from all buttons
+            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('btn-selected'));
+
+            // Find the clicked button using the data-os attribute and add the 'btn-selected' class
+            const selectedButton = document.querySelector(`.btn[data-os="${os}"]`);
+            if (selectedButton) {
+                selectedButton.classList.add('btn-selected');
+            }
+
+            // Set the value of the hidden input field
+            document.getElementById('os-choice-input').value = os;
+        }
+
+        function fileChosen() {
+            document.getElementById('file-chosen-message').style.display = 'inline';
+        }
+
+        function startLoading() {
+            // Display the loading spinner during processing
+            document.getElementById('spinner').style.display = 'inline';
+        }
+    </script>
+</body>
+</html>
